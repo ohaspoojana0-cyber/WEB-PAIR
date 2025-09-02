@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WhatsApp Bot Pairing</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    h1 {
+      color: #075E54;
+    }
+    #pair-code {
+      font-size: 28px;
+      font-weight: bold;
+      background: #25D366;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+    .instructions {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>WhatsApp Bot Pairing</h1>
+  <div id="pair-code">Loading...</div>
+  <div class="instructions">
+    Open WhatsApp ➝ Linked Devices ➝ Link with Phone Number ➝ Enter this code
+  </div>
+
+  <script>
+    async function fetchCode() {
+      try {
+        const res = await fetch("/pair-code"); // backend route
+        const data = await res.json();
+        document.getElementById("pair-code").innerText = data.code;
+      } catch (err) {
+        document.getElementById("pair-code").innerText = "Error!";
+      }
+    }
+    fetchCode();
+    setInterval(fetchCode, 5000); // refresh every 5s
+  </script>
+</body>
+</html>
